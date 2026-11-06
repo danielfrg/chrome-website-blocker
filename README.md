@@ -6,4 +6,3 @@ Apparently all extensions that offer this functionality require you share
 ridiculous amount of data or are just overly complicated.
 
 This extension simple, OSS, no data collected
-

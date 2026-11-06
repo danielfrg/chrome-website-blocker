@@ -1,8 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeDomain, validateConfig, readConfig, defaults } from "../extension/lib/config.js";
-import { isBlocking, isScheduleActive, nextTransition } from "../extension/lib/schedule.js";
-import { compileRules } from "../extension/lib/rules.js";
+import { normalizeDomain, validateConfig, readConfig, defaults } from "../lib/config.js";
+import { isBlocking, isScheduleActive, nextTransition } from "../lib/schedule.js";
+import { compileRules } from "../lib/rules.js";
 const window = (days, start, end) => ({ days, start, end });
 const config = (schedule = null, mode = "schedule") => ({
   version: 2,

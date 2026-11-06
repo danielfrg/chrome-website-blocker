@@ -5,5 +5,11 @@
   "tabWidth": 2,
   "printWidth": 100,
   "trailingComma": "all",
-  "ignorePatterns": ["dist/**", ".astro/**"]
+  "ignorePatterns": [
+    "dist/**",
+    ".output/**",
+    ".wxt/**",
+    "assets/theme.css",
+    "assets/components.css"
+  ]
 }

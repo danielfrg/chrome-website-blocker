@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { createController } from "../extension/lib/controller.js";
-import { defaults } from "../extension/lib/config.js";
+import { createController } from "../lib/controller.js";
+import { defaults } from "../lib/config.js";
 
 function mockChrome(initial) {
   const db = initial === undefined ? {} : { config: structuredClone(initial) };

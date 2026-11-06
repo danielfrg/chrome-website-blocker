@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { normalizeState } from "../extension/lib/ui-state.js";
+import { normalizeState } from "../lib/ui-state.js";
 
 test("old worker response requests extension reload instead of reading missing sites.length", () => {
   const legacy = {

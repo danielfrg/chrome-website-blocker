@@ -1,4 +1,4 @@
-# SiteBlocker
+# Website blocker
 
 <!-- impeccable:product-schema 1 -->
 
@@ -8,7 +8,7 @@ web
 
 ## Stack
 
-Approved design: Chrome Manifest V3, plain JavaScript, HTML and CSS, no runtime dependencies.
+Chrome Manifest V3 built with WXT, Svelte 5 and kit-ui (shared homelab theme). Background service worker is plain JavaScript with no UI dependencies.
 
 ## Users
 
