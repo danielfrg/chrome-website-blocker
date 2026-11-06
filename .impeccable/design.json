@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-15T17:21:32.592186+00:00",
+  "title": "Design System: SiteBlocker",
+  "extensions": {
+    "shadows": [],
+    "motion": [],
+    "breakpoints": [
+      {
+        "name": "narrow",
+        "value": "560px"
+      }
+    ]
+  },
+  "narrative": {
+    "northStar": "Clear controls and truthful status for a small local-only utility."
+  }
+}
