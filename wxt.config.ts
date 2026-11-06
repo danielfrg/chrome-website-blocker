@@ -8,8 +8,7 @@ export default defineConfig({
   }),
   manifest: {
     name: "Website blocker",
-    description:
-      "Block websites permanently or in a schedule. No data collected.",
+    description: "Block websites permanently or in a schedule. No data collected.",
     minimum_chrome_version: "120",
     permissions: ["declarativeNetRequest", "storage", "alarms", "activeTab"],
     action: { default_title: "Website blocker" },

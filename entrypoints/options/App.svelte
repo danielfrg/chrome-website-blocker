@@ -23,13 +23,13 @@
   // The schedule form is a draft that live refreshes must not clobber.
   let days = $state<number[]>([1, 2, 3, 4, 5]);
   let start = $state("09:00");
-  let end = $state("17:00");
+  let end = $state("18:00");
   let dirty = $state(false);
   let snapshot: Schedule | null = null;
 
+  const sitesMessage = $derived(store.messageError ? "" : store.message);
   const sites = $derived(store.state?.config?.sites ?? []);
   const busy = $derived(store.pending || !store.state?.config);
-  const hasSchedule = $derived(Boolean(store.state?.config?.schedule));
 
   function loadSchedule() {
     const schedule = store.state?.config?.schedule ?? null;
@@ -37,7 +37,7 @@
     dirty = false;
     days = [...(schedule?.days ?? [1, 2, 3, 4, 5])];
     start = schedule?.start ?? "09:00";
-    end = schedule?.end ?? "17:00";
+    end = schedule?.end ?? "18:00";
   }
   $effect(() => {
     // Re-sync from stored settings whenever they change and the user has no unsaved edits.
@@ -76,13 +76,6 @@
     });
     if (next) loadSchedule();
   }
-  async function clearSchedule() {
-    if (await store.request({ type: "saveSchedule", expectedSchedule: snapshot, schedule: null }))
-      loadSchedule();
-  }
-  async function reloadSchedule() {
-    if (await store.request({ type: "getState" }, false)) loadSchedule();
-  }
   async function reset() {
     if (confirm("Remove all sites and the shared schedule?")) {
       if (await store.request({ type: "reset" })) loadSchedule();
@@ -97,9 +90,6 @@
       <h1>Website blocker</h1>
     </div>
     <div class="header-end">
-      <span class="saved" role="status" aria-live="polite">
-        {store.messageError ? "" : store.message}
-      </span>
       <p class="status-line" aria-live="polite">
         <StatusDot status={store.statusDot} label={store.status} />
         <span>{store.status}</span>
@@ -111,7 +101,12 @@
   <StatusNotice {store} />
 
   <section class="panel" aria-labelledby="sites-heading">
-    <h2 id="sites-heading">Sites</h2>
+    <div class="panel-head">
+      <h2 id="sites-heading">Sites</h2>
+      <span class="feedback-ok" role="status" aria-live="polite" hidden={!sitesMessage}>
+        {sitesMessage}
+      </span>
+    </div>
     <fieldset disabled={busy}>
       <legend class="sr-only">Sites and blocking options</legend>
       {#if sites.length}
@@ -208,10 +203,6 @@
         </div>
         <div class="actions">
           <Button type="submit" tone="info" surface="solid">Save schedule</Button>
-          <Button onclick={reloadSchedule}>Reload schedule</Button>
-          {#if hasSchedule}
-            <Button tone="danger" surface="soft" onclick={clearSchedule}>Clear</Button>
-          {/if}
         </div>
       </form>
     </fieldset>
@@ -242,13 +233,6 @@
   }
   .header-end {
     gap: 12px;
-  }
-  /* Reserved width so "Saving…" / "Saved" never moves the page. */
-  .saved {
-    min-width: 64px;
-    text-align: right;
-    color: var(--text-muted);
-    font-size: var(--font-size-sm, 13px);
   }
   .panel {
     display: flex;
