@@ -1,13 +1,12 @@
 ---
 name: Website blocker
-description: A small local-only Chrome utility using the shared homelab Linear-style theme
+description: A small local-only Chrome utility using the shared theme
 ---
 
 # Website blocker interface
 
-Built with Svelte 5 and `@kenn-io/kit-ui`, like the other homelab apps (golinks, ciview, things).
-`assets/theme.css` and `assets/components.css` are copies of the shared files and must stay
-identical to the ones in those apps. App-specific styling lives in `assets/app.css` and component
+Built with Svelte 5 and `@kenn-io/kit-ui`.
+Theme and component styles come from the shared design system; keep `theme.css` and `components.css` unchanged and put app-specific rules in `app.css` and component
 `<style>` blocks, using theme tokens only. Charcoal (dark) is the default theme, toggled with
 `ThemeToggle` and stored in the extension page's localStorage.
 

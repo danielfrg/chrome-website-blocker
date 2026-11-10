@@ -7,7 +7,7 @@ import "../assets/components.css";
 
 const THEME_KEY = "website-blocker-theme";
 
-/** Applies the shared homelab theme (charcoal by default) and mounts a page. */
+/** Applies the shared theme (charcoal by default) and mounts a page. */
 export function boot(App: Component) {
   initTheme({ storageKey: THEME_KEY });
   try {
