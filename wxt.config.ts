@@ -2,10 +2,6 @@ import { defineConfig } from "wxt";
 
 export default defineConfig({
   modules: ["@wxt-dev/module-svelte"],
-  vite: () => ({
-    // Kit UI ships Svelte/TypeScript source; compile it with the extension.
-    optimizeDeps: { exclude: ["@kenn-io/kit-ui"] },
-  }),
   manifest: {
     name: "Website blocker",
     description: "Block websites permanently or in a schedule. No data collected.",
