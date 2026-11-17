@@ -1,8 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { Button, SelectDropdown, ThemeToggle } from "@kenn-io/kit-ui";
+  import { Button } from "@ui-sdk/svelte/button";
+  import { Preferences } from "@ui-sdk/svelte/preferences";
+  import { ThemeToggle } from "../../src/design-system/custom/theme-toggle";
+  import { colorScheme } from "../../lib/color-scheme";
+  import ModeSelect from "../../components/ModeSelect.svelte";
   import { normalizeDomain } from "../../lib/config.js";
-  import { MODE_OPTIONS, Store, type Mode } from "../../lib/store.svelte";
+  import { Store, type Mode } from "../../lib/store.svelte";
   import StatusNotice from "../../components/StatusNotice.svelte";
 
   const store = new Store();
@@ -28,88 +32,50 @@
     store.request({ type: "setSiteMode", domain: currentDomain, mode: mode as Mode });
 </script>
 
-<main class="popup">
-  <header class="top">
-    <div class="brand">
-      <img src="/icon/32.png" alt="" width="24" height="24" />
-      <h1>Website blocker</h1>
-    </div>
-    <div class="header-end">
-      <span class="saved" role="status" aria-live="polite">
-        {store.messageError ? "" : store.message}
-      </span>
-      <ThemeToggle />
-    </div>
-  </header>
+<Preferences preferences={[colorScheme]}>
+  <main class="popup">
+    <header class="popup-top">
+      <div class="brand">
+        <img src="/icon/32.png" alt="" width="24" height="24" />
+        <h1>Website blocker</h1>
+      </div>
+      <div class="header-end">
+        <span class="saved" role="status" aria-live="polite">
+          {store.messageError ? "" : store.message}
+        </span>
+        <ThemeToggle {colorScheme} />
+      </div>
+    </header>
 
-  <p class="sr-only" aria-live="polite">{store.status}</p>
+    <p class="sr-only" aria-live="polite">{store.status}</p>
 
-  <StatusNotice {store} />
+    <StatusNotice {store} />
 
-  {#if site}
-    <div class="current">
-      <span class="domain">{site.domain}</span>
-      <SelectDropdown
-        value={site.mode}
-        options={MODE_OPTIONS}
-        title={`Blocking for ${site.domain}`}
-        align="end"
+    {#if site}
+      <div class="current">
+        <span class="domain">{site.domain}</span>
+        <ModeSelect
+          value={site.mode}
+          label={`Blocking for ${site.domain}`}
+          {disabled}
+          onchange={setMode}
+        />
+      </div>
+    {:else if currentDomain}
+      <Button
+        class="full"
+        data-variant="solid"
         {disabled}
-        onchange={setMode}
-      />
-    </div>
-  {:else if currentDomain}
-    <Button
-      class="full"
-      tone="info"
-      surface="solid"
-      {disabled}
-      onclick={() => store.request({ type: "addDomain", domain: currentDomain, mode: "block" })}
-    >
-      Block {currentDomain}
+        onclick={() => store.request({ type: "addDomain", domain: currentDomain, mode: "block" })}
+      >
+        Block {currentDomain}
+      </Button>
+    {:else}
+      <p class="muted">Open a regular website to block it.</p>
+    {/if}
+
+    <Button class="full" onclick={() => chrome.runtime.openOptionsPage()}>
+      Manage sites &amp; schedule
     </Button>
-  {:else}
-    <p class="muted">Open a regular website to block it.</p>
-  {/if}
-
-  <Button class="full" onclick={() => chrome.runtime.openOptionsPage()}>
-    Manage sites &amp; schedule
-  </Button>
-</main>
-
-<style>
-  .popup {
-    width: 360px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-  }
-  .top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .header-end {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .saved {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm, 13px);
-  }
-  .current {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-  .domain {
-    font-weight: 500;
-    overflow-wrap: anywhere;
-  }
-  :global(.full) {
-    width: 100%;
-  }
-</style>
+  </main>
+</Preferences>

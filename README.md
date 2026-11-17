@@ -7,4 +7,6 @@ ridiculous amount of data or are just overly complicated.
 
 This extension simple, OSS, no data collected
 
+**Personal project**: This is completely vibe coded for my own personal use. I won't be accepting feature requests or PRs. You're welcome to fork it and make it your own.
+
 ![screenshot](docs/screenshot.png)
